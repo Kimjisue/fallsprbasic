@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>create</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+create
+<div id = "div_id" class="div_abcde">
+    로그인
+</div>
+<div>
+    아이디
+    <input type="number" id="login_user_num" />
+    이름
+    <input type = "text", id = "login_user_name"/>
+    비밀번호
+    <input type = "text", id = "login_user_password">
+    나이
+    <input type = "text", id = "login_user_age">
+
+    <button onclick = "login_user()">
+        저장
+    </button>
+    <button onclick = "change_html()">
+        Password 바꿔보기!
+    </button>
+
+    <script>
+        function change_html(){
+            let login_user_password = $("#login_user_password").val();
+            $("#div_id").html(login_user_password);
+        }
+
+        /*    let div_id = $("#div_id").html(create_board_title);
+            let div_id_class = $("#div_id").attr(class);
+            alert(div_id)
+            alert(div_id_class)*/
+        function login_user(){
+            $.ajax({
+                url:"/api/user/login",
+                type:"GET",
+                contentType : 'application/json; charset=utf-8',
+                data:{
+                    num: $("#login_user_num").val()
+                    ,name: $("#login_user_title").val()
+                    ,password: $("#login_user_password").val()
+                    ,age : $("#login_user_age").val()
+                },
+                cache: false,
+                success: (obj_data,status,xhr)=>{
+                    alert(JSON.stringify(obj_data));
+                },
+                error: (obj_data,status,xhr)=>{
+                    alert("error!");
+                    alert(JSON.stringify(obj_data));
+                },
+            })
+        }
+
+
+
+    </script>
+</div>
+
+</body>
+</html>
