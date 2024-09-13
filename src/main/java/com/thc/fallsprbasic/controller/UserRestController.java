@@ -23,7 +23,7 @@ public class UserRestController {
 
     List<Map<String,Object>> userList = new ArrayList<>();
     @GetMapping("/login") //이 안에 있는 주소값은 꼭 유니크해야함!!
-    public Map<String, Object> login(@RequestParam Map<String , Object>params){
+    public Map<String, Object> login(@RequestParam Map<String, Object>params){
         return userService.loginUser(params);
     }
     @GetMapping("/list") //이 안에 있는 주소값은 꼭 유니크해야함!!

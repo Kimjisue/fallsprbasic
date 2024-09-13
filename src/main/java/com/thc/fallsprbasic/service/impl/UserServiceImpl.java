@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
     public Map<String, Object> loginUser(Map<String, Object> params) {
         System.out.println("createUser");
         User user = new User();
-        user.setNum(Integer.parseInt(params.get("num").toString()));
+        user.setNum(Integer.parseInt(params.get("num")+ ""));;
         user.setName(params.get("name").toString());
         user.setPassword(params.get("password").toString());
         user.setAge(params.get("age").toString());
