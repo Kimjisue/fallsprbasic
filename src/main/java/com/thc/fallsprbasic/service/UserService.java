@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Map;
 @Service
 public interface UserService {
-    Map<String, Object> loginUser(Map<String, Object> params);
+    Map<String, Object> createUser(Map<String, Object> params);
     Map<String, Object> updateUser(Map<String, Object> params);
-    Map<String, Object> deleteUser(Integer id);
+    Map<String, Object> deleteUser(Long id);
     List<User> listUser();
-    User detailUser(Integer id);
+    User detailUser(Long id);
 }

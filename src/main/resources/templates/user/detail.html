@@ -8,17 +8,17 @@
 <body>
 detail
 <br>
-order
-<input type="text" id="detail_board_id" readonly />
-title
-<input type="text" id="detail_board_title" />
-content
-<input type="text" id="detail_board_content" />
-author
-<input type="text" id="detail_board_author" />
+id
+<input type="text" id="detail_user_id" readonly />
+num
+<input type="text" id="detail_user_num" />
+name
+<input type="text" id="detail_user_name" readonly/>
+age
+<input type="text" id="detail_user_age" />
 
-<button onclick="update_board()">
-  글 수정
+<button onclick="update_user()">
+  유저 수정
 </button>
 
 <script>
@@ -36,13 +36,13 @@ author
   // A $( document ).ready() block.
   $( document ).ready(function() {
     console.log( "ready!" );
-    detail_board();
+    detail_user();
   });
 
 
-  function detail_board(){
+  function detail_user(){
     $.ajax({
-      url: "/api/board/detail",
+      url: "/api/user/detail",
       type: "GET",
       contentType : 'application/json; charset=utf-8',
       data: {
@@ -59,10 +59,10 @@ author
         // alert(obj_data["detail_board"]["author"]);
         //위 아래 둘 다 방법으로 사용할 수 있음
         //$("#detail_board_order").val(obj_data.order);
-        $("#detail_board_id").val(obj_data["id"]);
-        $("#detail_board_title").val(obj_data["title"]);
-        $("#detail_board_content").val(obj_data["content"]);
-        $("#detail_board_author").val(obj_data["author"]);
+        $("#detail_user_id").val(obj_data["id"]);
+        $("#detail_user_num").val(obj_data["num"]);
+        $("#detail_user_name").val(obj_data["name"]);
+        $("#detail_user_age").val(obj_data["age"]);
 
       },
       error: (obj_data, status, xhr)=>{
@@ -72,17 +72,17 @@ author
     });
   }
 
-  function update_board(){
+  function update_user(){
     $.ajax({
-      url: "/api/board/update",
+      url: "/api/user/update",
       type: "GET",
       contentType : 'application/json; charset=utf-8',
       data: {
         //order : $("#detail_board_order").val()
         id : final_id
-        ,title : $("#detail_board_title").val()
-        ,content : $("#detail_board_content").val()
-        ,author : $("#detail_board_author").val()
+        ,num : $("#detail_user_num").val()
+        ,name : $("#detail_user_name").val()
+        ,age : $("#detail_user_age").val()
       },
       cache: false,
       success: (obj_data, status, xhr)=>{
@@ -94,9 +94,9 @@ author
       }
     });
   }
-  function delete_board(){
+  function delete_user(){
     $.ajax({
-      url: "/api/board/delete",
+      url: "/api/user/delete",
       type: "GET",
       contentType : 'application/json; charset=utf-8',
       data: {

@@ -22,9 +22,9 @@ public class UserRestController {
     }
 
     List<Map<String,Object>> userList = new ArrayList<>();
-    @GetMapping("/login") //이 안에 있는 주소값은 꼭 유니크해야함!!
-    public Map<String, Object> login(@RequestParam Map<String, Object>params){
-        return userService.loginUser(params);
+    @GetMapping("/create") //이 안에 있는 주소값은 꼭 유니크해야함!!
+    public Map<String, Object> create(@RequestParam Map<String, Object>params){
+        return userService.createUser(params);
     }
     @GetMapping("/list") //이 안에 있는 주소값은 꼭 유니크해야함!!
     public List<User> list(){
@@ -32,8 +32,8 @@ public class UserRestController {
     }
 
     @GetMapping("/detail") //이 안에 있는 주소값은 꼭 유니크해야함!!
-    public User detail(@RequestParam Integer num){
-        return userService.detailUser(num);
+    public User detail(@RequestParam Long id){
+        return userService.detailUser(id);
     }
     @GetMapping("/update") //이 안에 있는 주소값은 꼭 유니크해야함!!
     public Map<String,Object> update(@RequestParam Map<String,Object> params){
@@ -41,6 +41,6 @@ public class UserRestController {
     }
     @GetMapping("/delete")
     public Map<String, Object> delete(@RequestParam Map<String, Object> params){
-        return userService.deleteUser(Integer.parseInt(params.get("num") + ""));
+        return userService.deleteUser(Long.parseLong(params.get("id") + ""));
     }
 }

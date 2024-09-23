@@ -62,15 +62,17 @@
 
 <div class="form-container">
     <div id="div_id" class="div_abcde">로그인</div>
-
     <label>아이디</label>
-    <input type="number" id="login_user_num" />
+    <input type="number" id="login_user_id" />
+
+    <label>별명</label>
+    <input type="text" id="login_user_num" />
 
     <label>이름</label>
     <input type="text" id="login_user_name" />
 
     <label>비밀번호</label>
-    <input type="text" id="login_user_password" />
+    <input type="password" id="login_user_password" />
 
     <label>나이</label>
     <input type="text" id="login_user_age" />
@@ -87,11 +89,12 @@
 
     function login_user() {
         $.ajax({
-            url: "/api/user/login",
+            url: "/api/user/create",
             type: "GET",
             contentType: 'application/json; charset=utf-8',
             data: {
-                num: $("#login_user_num").val(),
+                id : $("#login_user_id").val()
+                ,num: $("#login_user_num").val(),
                 name: $("#login_user_name").val(),
                 password: $("#login_user_password").val(),
                 age: $("#login_user_age").val()

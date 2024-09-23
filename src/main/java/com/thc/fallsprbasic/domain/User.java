@@ -1,7 +1,6 @@
 package com.thc.fallsprbasic.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +9,13 @@ import lombok.Setter;
 @Entity
 public class User {
     @Id
-    Integer num;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+
+    @Column(unique = true)
+    String  num;
+
+    @Column(unique = true)
     String name;
     String password;
     String age;
