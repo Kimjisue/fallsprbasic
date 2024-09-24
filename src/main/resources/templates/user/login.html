@@ -16,26 +16,21 @@ create
 <input type="text" id="create_user_username" />
 비번
 <input type="password" id="create_user_password" />
-이름
-<input type="text" id="create_user_name" />
-전화번호
-<input type="text" id="create_user_phone" />
 
-<button onclick="create_user()">
-    저장
+
+<button onclick="login_user()">
+    로그인
 </button>
 
 <script>
-    function create_user(){
+    function login_user(){
         $.ajax({
-            url: "/api/user/create",
+            url: "/api/user/login",
             type: "GET",
             contentType : 'application/json; charset=utf-8',
             data: {
                 username : $("#create_user_username").val()
                 ,password : $("#create_user_password").val()
-                ,name : $("#create_user_name").val()
-                ,phone : $("#create_user_phone").val()
             },
             cache: false,
             success: (obj_data, status, xhr)=>{

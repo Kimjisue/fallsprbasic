@@ -1,19 +1,21 @@
 package com.thc.fallsprbasic.controller;
 
+import com.thc.fallsprbasic.domain.Board;
 import com.thc.fallsprbasic.domain.User;
+import com.thc.fallsprbasic.service.BoardService;
 import com.thc.fallsprbasic.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @RequestMapping("/api/user")
 @RestController
 public class UserRestController {
+
     private final UserService userService;
     public UserRestController(
             UserService userService
@@ -21,26 +23,28 @@ public class UserRestController {
         this.userService = userService;
     }
 
-    List<Map<String,Object>> userList = new ArrayList<>();
-    @GetMapping("/create") //이 안에 있는 주소값은 꼭 유니크해야함!!
-    public Map<String, Object> create(@RequestParam Map<String, Object>params){
-        return userService.createUser(params);
+    @GetMapping("/create")
+    public Map<String, Object> create(@RequestParam Map<String, Object> params){
+        return userService.create(params);
     }
-    @GetMapping("/list") //이 안에 있는 주소값은 꼭 유니크해야함!!
+    @GetMapping("/list")
     public List<User> list(){
-        return userService.listUser();
+        return userService.list();
     }
-
     @GetMapping("/detail") //이 안에 있는 주소값은 꼭 유니크해야함!!
     public User detail(@RequestParam Long id){
-        return userService.detailUser(id);
+        return userService.detail(id);
     }
-    @GetMapping("/update") //이 안에 있는 주소값은 꼭 유니크해야함!!
-    public Map<String,Object> update(@RequestParam Map<String,Object> params){
-        return userService.updateUser(params);
+    @GetMapping("/update")
+    public Map<String, Object> update(@RequestParam Map<String, Object> params){
+        return userService.update(params);
     }
     @GetMapping("/delete")
     public Map<String, Object> delete(@RequestParam Map<String, Object> params){
-        return userService.deleteUser(Long.parseLong(params.get("id") + ""));
+        return userService.delete(Long.parseLong(params.get("id") + ""));
+    }
+    @GetMapping("/login")
+    public Map<String, Object> login(@RequestParam Map<String, Object> params){
+        return userService.login(params);
     }
 }

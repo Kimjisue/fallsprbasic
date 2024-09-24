@@ -6,11 +6,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+
 @Service
 public interface UserService {
-    Map<String, Object> createUser(Map<String, Object> params);
-    Map<String, Object> updateUser(Map<String, Object> params);
-    Map<String, Object> deleteUser(Long id);
-    List<User> listUser();
-    User detailUser(Long id);
+    Map<String, Object> create(Map<String, Object> params);
+    Map<String, Object> update(Map<String, Object> params);
+    Map<String, Object> delete(Long id);
+    List<User> list();
+    User detail(Long id);
+
+    Map<String,Object> login(Map<String, Object> params);
 }

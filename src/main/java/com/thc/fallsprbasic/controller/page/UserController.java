@@ -20,5 +20,9 @@ public class UserController {
     public String detail(@PathVariable String id){
         return "user/detail";
     }
+    @GetMapping("/login") //이 안에 있는 주소값은 꼭 유니크해야함!!
+    public String login(){
+        return "user/login";
+    }
 }
 
