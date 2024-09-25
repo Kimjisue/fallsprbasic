@@ -16,4 +16,8 @@ public interface UserService {
     User detail(Long id);
 
     Map<String,Object> login(Map<String, Object> params);
+
+    Map<String,Object> signup(Map<String, Object> params);
+    boolean id(String username);
+
 }

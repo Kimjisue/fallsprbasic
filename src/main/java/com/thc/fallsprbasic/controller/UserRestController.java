@@ -47,4 +47,13 @@ public class UserRestController {
     public Map<String, Object> login(@RequestParam Map<String, Object> params){
         return userService.login(params);
     }
+
+    @GetMapping("/signup")
+    public Map<String, Object> signup(@RequestParam Map<String, Object> params){
+        return userService.signup(params);
+    }
+    @GetMapping("/id")
+    public boolean signup(@RequestParam String username){
+        return userService.id(username);
+    }
 }

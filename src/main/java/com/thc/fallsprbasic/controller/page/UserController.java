@@ -24,5 +24,11 @@ public class UserController {
     public String login(){
         return "user/login";
     }
+
+    @GetMapping("/signup") //이 안에 있는 주소값은 꼭 유니크해야함!!
+    public String signup(){
+        return "user/signup";
+    }
+
 }
 

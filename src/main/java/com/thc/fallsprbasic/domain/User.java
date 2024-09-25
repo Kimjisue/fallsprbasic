@@ -5,19 +5,19 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-@Setter
 @Entity
 public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    Long id;
+    @Id Long id;
 
-    @Column(unique=true, nullable=false)
+    @Setter @Column(unique=true, nullable=false)
     String username;
 
-    @Column(nullable=false)
+    @Setter @Column(nullable=false)
     String password;
 
-    String name;
-    String phone;
+    @Setter String name;
+    @Setter String phone;
 }
+
+//id도 setter 해줄 수 있지만 정확하게는 id는 setter 빼는게 맞음

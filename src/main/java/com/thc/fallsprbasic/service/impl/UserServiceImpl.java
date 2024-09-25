@@ -114,5 +114,42 @@ public class UserServiceImpl implements UserService {
         return null;
 
     }
+    @Override
+    public Map<String, Object> signup(Map<String, Object> params) {
+        System.out.println("signup");
+        Map<String, Object> result = new HashMap<String, Object>();
+///사용자가 입력한 username 받아오기
+        String username = (String) params.get("username");
+        //String password = (String) params.get("password");
+        //repository에 저장되어있는 username 가져온다
+        User user = userRepository.findByUsername(username);
+        if(user == null){
+            user = new User();
+            user.setUsername((String) params.get("username"));
+            user.setPassword((String) params.get("password"));
+            user.setName((String) params.get("name"));
+            user.setPhone((String) params.get("phone"));
+            user = userRepository.save(user);
+    //save로 repository에 저장해준다
+            result.put("id", user.getId());
+        } else {
+            result.put("id duplicated", user.getUsername());
+        }
+        return result;
+        //return create(params);
+        //create랑 내용 똑같으니깐 create return 해준거임
+    }
+
+    @Override
+    public boolean id(String username) {
+        User user = userRepository.findByUsername(username);
+        if(user == null){
+            return true;
+        }
+        return false;
+    }
+
+
+
 
 }

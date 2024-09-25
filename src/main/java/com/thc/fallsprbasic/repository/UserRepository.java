@@ -10,3 +10,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findByUsername(String username);
     User findByUsernameAndPassword(String username, String password);
 }
+
+//JpaRepository 를 상속한다면 findall 쓸 수 있다.
