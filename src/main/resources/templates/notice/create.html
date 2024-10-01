@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>create</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+create
+<div id = "div_id" class="div_abcde">
+    글 입력 테스트
+</div>
+<div>
+    제목
+    <input type = "text", id = "create_notice_title"/>
+    내용
+    <input type = "text", id = "create_notice_content">
+
+    <button onclick = "create_notice()">
+        저장
+    </button>
+    <button onclick = "change_html()">
+        글 바꿔보기!
+    </button>
+
+    <script>
+        function change_html(){
+            let create_notice_title = $("#create_notice_title").val();
+            $("#div_id").html(create_notice_title);
+        }
+
+        function create_notice(){
+            $.ajax({
+                url:"/api/notice/create",
+                type:"GET",
+                contentType : 'application/json; charset=utf-8',
+                data:{
+                    title: $("#create_notice_title").val()
+                    ,content: $("#create_notice_content").val()
+                },
+                cache: false,
+                success: (obj_data,status,xhr)=>{
+                    alert(JSON.stringify(obj_data));
+                },
+                error: (obj_data,status,xhr)=>{
+                    alert("error!");
+                    alert(JSON.stringify(obj_data));
+                },
+            })
+        }
+
+
+
+    </script>
+</div>
+
+</body>
+</html>

@@ -1,8 +1,6 @@
 package com.thc.fallsprbasic.controller;
 
-import com.thc.fallsprbasic.domain.Board;
 import com.thc.fallsprbasic.domain.User;
-import com.thc.fallsprbasic.service.BoardService;
 import com.thc.fallsprbasic.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,4 +54,5 @@ public class UserRestController {
     public boolean signup(@RequestParam String username){
         return userService.id(username);
     }
+
 }
