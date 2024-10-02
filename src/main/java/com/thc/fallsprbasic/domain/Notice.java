@@ -1,5 +1,6 @@
 package com.thc.fallsprbasic.domain;
 
+import com.thc.fallsprbasic.dto.NoticeDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,5 +16,12 @@ public class Notice {
 
     @Setter @Column
     String content;
+
+    public NoticeDto.CreateResDto toCreateResDto(){
+        NoticeDto.CreateResDto dto = new NoticeDto.CreateResDto();
+        dto.setId(id);
+        return dto;
+
+    }
 
 }
