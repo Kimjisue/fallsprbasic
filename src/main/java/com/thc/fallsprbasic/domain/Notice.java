@@ -2,6 +2,7 @@ package com.thc.fallsprbasic.domain;
 
 import com.thc.fallsprbasic.dto.NoticeDto;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 

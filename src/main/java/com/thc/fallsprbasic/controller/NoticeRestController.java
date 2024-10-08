@@ -42,17 +42,14 @@ public class NoticeRestController {
         noticeService.deleteNotice(param.getId());
     }
 
-    @GetMapping("/list") //이 안에 있는 주소값은 꼭 유니크해야함!!
-    public List<Notice> listNotice(){
-        return noticeService.listNotice();
-        //return boardList;
+    @GetMapping("/detail")
+    public NoticeDto.DetailResDto detail(@RequestParam Long id){
+        return noticeService.detail(id);
     }
-
-    @GetMapping("/detail") //이 안에 있는 주소값은 꼭 유니크해야함!!
-    Notice detailNotice(@RequestParam Long id){
-        return noticeService.detailNotice(id);
+    @GetMapping("/list")
+    public List<NoticeDto.DetailResDto> list(){
+        return noticeService.list();
     }
-
 
 
 
