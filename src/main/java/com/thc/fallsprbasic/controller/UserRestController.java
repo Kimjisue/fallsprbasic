@@ -1,11 +1,9 @@
 package com.thc.fallsprbasic.controller;
 
 import com.thc.fallsprbasic.domain.User;
+import com.thc.fallsprbasic.dto.UserDto;
 import com.thc.fallsprbasic.service.UserService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -21,9 +19,9 @@ public class UserRestController {
         this.userService = userService;
     }
 
-    @GetMapping("/create")
-    public Map<String, Object> create(@RequestParam Map<String, Object> params){
-        return userService.create(params);
+    @PostMapping("/create")
+    public UserDto.CreateResDto create(@RequestBody UserDto.CreateReqDto param){
+        return userService.create(param);
     }
     @GetMapping("/list")
     public List<User> list(){
@@ -41,14 +39,14 @@ public class UserRestController {
     public Map<String, Object> delete(@RequestParam Map<String, Object> params){
         return userService.delete(Long.parseLong(params.get("id") + ""));
     }
-    @GetMapping("/login")
-    public Map<String, Object> login(@RequestParam Map<String, Object> params){
-        return userService.login(params);
+    @PostMapping("/login")
+    public UserDto.LoginResDto login(@RequestBody UserDto.LoginReqDto param){
+        return userService.login(param);
     }
 
-    @GetMapping("/signup")
-    public Map<String, Object> signup(@RequestParam Map<String, Object> params){
-        return userService.signup(params);
+    @PostMapping("/signup")
+    public UserDto.CreateResDto signup(@RequestBody UserDto.CreateReqDto param){
+        return userService.signup(param);
     }
     @GetMapping("/id")
     public boolean signup(@RequestParam String username){

@@ -29,17 +29,19 @@ public class NoticeRestController {
     //create - post
     //update - put
 
-    @PostMapping("/create") //이 안에 있는 주소값은 꼭 유니크해야함!!
+    @PostMapping("") //이 안에 있는 주소값은 꼭 유니크해야함!!
     public NoticeDto.CreateResDto createNotice(@RequestBody NoticeDto.CreateReqDto param){
-//        Map<String,Object> params = new HashMap<String,Object>();
-//        params.put("title", param.getTitle());
-//        params.put("content", param.getContent());
         return noticeService.createNotice(param);
     }
-    @PutMapping("/update") //이 안에 있는 주소값은 꼭 유니크해야함!!
+    @PutMapping("") //이 안에 있는 주소값은 꼭 유니크해야함!!
     public void updateNotice(@RequestBody NoticeDto.UpdateReqDto param){
         noticeService.updateNotice(param);
     }
+    @DeleteMapping("")
+    public void deleteNotice(@RequestBody NoticeDto.UpdateReqDto param){
+        noticeService.deleteNotice(param.getId());
+    }
+
     @GetMapping("/list") //이 안에 있는 주소값은 꼭 유니크해야함!!
     public List<Notice> listNotice(){
         return noticeService.listNotice();
@@ -51,10 +53,6 @@ public class NoticeRestController {
         return noticeService.detailNotice(id);
     }
 
-    @GetMapping("/delete")
-    public Map<String, Object> deleteNotice(@RequestParam Map<String, Object> params){
-        return noticeService.deleteNotice(Long.parseLong(params.get("id") + ""));
-    }
 
 
 

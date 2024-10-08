@@ -68,7 +68,7 @@ content
 
   function update_notice(){
     $.ajax({
-      url: "/api/notice/update",
+      url: "/api/notice",
       type: "PUT",
       contentType : 'application/json; charset=utf-8',
       data: JSON.stringify({
@@ -89,12 +89,12 @@ content
   }
   function delete_notice(){
     $.ajax({
-      url: "/api/notice/delete",
-      type: "GET",
+      url: "/api/notice",
+      type: "DELETE",
       contentType : 'application/json; charset=utf-8',
-      data: {
+      data: JSON.stringify({
         id : final_id
-      },
+      }),
       cache: false,
       success: (obj_data, status, xhr)=>{
         alert(JSON.stringify(obj_data));
