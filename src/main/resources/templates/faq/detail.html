@@ -14,6 +14,8 @@ title
 <input type="text" id="detail_faq_title" />
 content
 <input type="text" id="detail_faq_content" />
+작성자
+<input type="text" id="detail_faq_usesUsername" />
 
 
 <button onclick="update_faq()">
@@ -57,6 +59,7 @@ content
         $("#detail_faq_id").val(obj_data["id"]);
         $("#detail_faq_title").val(obj_data["title"]);
         $("#detail_faq_content").val(obj_data["content"]);
+        $("#detail_faq_usesUsername").val(obj_data["userUsername"]);
 
       },
       error: (obj_data, status, xhr)=>{

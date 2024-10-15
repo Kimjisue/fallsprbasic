@@ -1,13 +1,11 @@
 package com.thc.fallsprbasic.service.impl;
 
 import com.thc.fallsprbasic.domain.Faq;
-import com.thc.fallsprbasic.domain.Notice;
+import com.thc.fallsprbasic.domain.User;
 import com.thc.fallsprbasic.dto.FaqDto;
-import com.thc.fallsprbasic.dto.NoticeDto;
 import com.thc.fallsprbasic.repository.FaqRepository;
-import com.thc.fallsprbasic.repository.NoticeRepository;
+import com.thc.fallsprbasic.repository.UserRepository;
 import com.thc.fallsprbasic.service.FaqService;
-import com.thc.fallsprbasic.service.NoticeService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,10 +16,13 @@ import java.util.Map;
 public class FaqServiceImpl implements FaqService {
 
     private final FaqRepository faqRepository;
+    private final UserRepository userRepository;
     public FaqServiceImpl(
             FaqRepository faqRepository
-    ) {
+            ,UserRepository userRepository,
+            UserRepository userRepository1) {
         this.faqRepository = faqRepository;
+        this.userRepository = userRepository1;
     }
 
     @Override
@@ -55,6 +56,16 @@ public class FaqServiceImpl implements FaqService {
         res.setId(faq.getId());
         res.setTitle(faq.getTitle());
         res.setContent(faq.getContent());
+        res.setUserId(faq.getUserId());
+        //사용자 id 값을 가져올 수 있다.
+        Long userId = faq.getUserId();
+        try{
+            User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException(""));
+            res.setUserUsername((user.getUsername()));
+        }catch(Exception e){
+
+        }
+
         return res;
     }
 

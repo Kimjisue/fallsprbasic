@@ -114,7 +114,8 @@ public class UserServiceImpl implements UserService {
         if(user != null){
             //로그인 성공 !
             UserDto.LoginResDto res = new UserDto.LoginResDto();
-            res.setResult(true);
+            //res.setResult(true);
+            res.setId(user.getId());
             return res;
         }
         return null;

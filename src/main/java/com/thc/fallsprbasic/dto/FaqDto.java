@@ -13,10 +13,11 @@ public class FaqDto {
     public static class CreateReqDto {
         private String title;
         private String content;
+        private Long userId;
 
 
         public Faq toEntity() {
-            return Faq.of(getTitle(), getContent());
+            return Faq.of(getUserId(),getTitle(), getContent());
         }
     }
 
@@ -38,8 +39,10 @@ public class FaqDto {
     @Getter
     public static class DetailResDto {
         private Long id;
+        private Long userId;
         private String title;
         private String content;
+        private String userUsername;
     }
 
 }
