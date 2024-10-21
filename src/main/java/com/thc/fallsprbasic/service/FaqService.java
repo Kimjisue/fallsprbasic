@@ -12,7 +12,7 @@ public interface FaqService {
     FaqDto.CreateResDto create(FaqDto.CreateReqDto param);
 
     void update(FaqDto.UpdateReqDto params);
-    Map<String, Object> delete(Long id);
-    List<FaqDto.DetailResDto> list();
+    void delete(Long id);
+    List<FaqDto.DetailResDto> list(FaqDto.ListReqDto param);
     FaqDto.DetailResDto detail(Long id);
 }

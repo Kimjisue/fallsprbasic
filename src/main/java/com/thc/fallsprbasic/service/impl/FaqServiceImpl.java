@@ -3,6 +3,7 @@ package com.thc.fallsprbasic.service.impl;
 import com.thc.fallsprbasic.domain.Faq;
 import com.thc.fallsprbasic.domain.User;
 import com.thc.fallsprbasic.dto.FaqDto;
+import com.thc.fallsprbasic.mapper.FaqMapper;
 import com.thc.fallsprbasic.repository.FaqRepository;
 import com.thc.fallsprbasic.repository.UserRepository;
 import com.thc.fallsprbasic.service.FaqService;
@@ -16,13 +17,17 @@ import java.util.Map;
 public class FaqServiceImpl implements FaqService {
 
     private final FaqRepository faqRepository;
+    private final FaqMapper faqMapper;
     private final UserRepository userRepository;
     public FaqServiceImpl(
             FaqRepository faqRepository
-            ,UserRepository userRepository,
-            UserRepository userRepository1) {
+            , FaqMapper faqMapper
+            ,UserRepository userRepository
+    ) {
         this.faqRepository = faqRepository;
-        this.userRepository = userRepository1;
+        this.faqMapper = faqMapper;
+        this.userRepository = userRepository;
+
     }
 
     @Override
@@ -44,10 +49,9 @@ public class FaqServiceImpl implements FaqService {
     }
 
     @Override
-    public Map<String, Object> delete(Long id) {
+    public void delete(Long id) {
         Faq faq = faqRepository.findById(id).orElseThrow(() -> new RuntimeException(""));
         faqRepository.delete(faq);
-        return null;
     }
 
     public FaqDto.DetailResDto entityToDto(Faq faq){
@@ -77,12 +81,13 @@ public class FaqServiceImpl implements FaqService {
 
 
     @Override
-    public List<FaqDto.DetailResDto> list() {
-        List<FaqDto.DetailResDto> list = new ArrayList<FaqDto.DetailResDto>();
-        List<Faq> faqList = faqRepository.findAll();
-        for(Faq faq : faqList) {
-            list.add(entityToDto(faq));
-        }
-        return list;
+    public List<FaqDto.DetailResDto> list(FaqDto.ListReqDto param) {
+        return faqMapper.list(param);
+//        List<FaqDto.DetailResDto> list = new ArrayList<FaqDto.DetailResDto>();
+//        List<Faq> faqList = faqRepository.findAll();
+//        for(Faq faq : faqList) {
+//            list.add(entityToDto(faq));
+//        }
+//        return list;
     }
 }

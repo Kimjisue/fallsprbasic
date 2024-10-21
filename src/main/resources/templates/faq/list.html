@@ -7,6 +7,7 @@
 </head>
 <body>
 FAQ list
+검색어 : <input id="search_faq_title"/>
 
 <div id="div_list_faq">
 </div>
@@ -29,7 +30,9 @@ FAQ list
       url: "/api/faq/list",
       type: "GET",
       contentType : 'application/json; charset=utf-8',
-      data: {},
+      data: {
+        title : ""
+      },
       cache: false,
       success: (obj_data, status, xhr)=>{
         alert(JSON.stringify(obj_data));
