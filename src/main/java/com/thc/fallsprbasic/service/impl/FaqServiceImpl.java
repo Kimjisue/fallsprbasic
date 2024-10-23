@@ -54,29 +54,30 @@ public class FaqServiceImpl implements FaqService {
         faqRepository.delete(faq);
     }
 
-    public FaqDto.DetailResDto entityToDto(Faq faq){
-        //돌려줄 디티오에 정보를 담아보겠습니다. (실제로는 Mapper를 사용할 것이라, 이렇게는 잘 안씀)
-        FaqDto.DetailResDto res = new FaqDto.DetailResDto();
-        res.setId(faq.getId());
-        res.setTitle(faq.getTitle());
-        res.setContent(faq.getContent());
-        res.setUserId(faq.getUserId());
-        //사용자 id 값을 가져올 수 있다.
-        Long userId = faq.getUserId();
-        try{
-            User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException(""));
-            res.setUserUsername((user.getUsername()));
-        }catch(Exception e){
-
-        }
-
-        return res;
-    }
+//    public FaqDto.DetailResDto entityToDto(Faq faq){
+//        //돌려줄 디티오에 정보를 담아보겠습니다. (실제로는 Mapper를 사용할 것이라, 이렇게는 잘 안씀)
+//        FaqDto.DetailResDto res = new FaqDto.DetailResDto();
+//        res.setId(faq.getId());
+//        res.setTitle(faq.getTitle());
+//        res.setContent(faq.getContent());
+//        res.setUserId(faq.getUserId());
+//        //사용자 id 값을 가져올 수 있다.
+//        Long userId = faq.getUserId();
+//        try{
+//            User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException(""));
+//            res.setUserUsername((user.getUsername()));
+//        }catch(Exception e){
+//
+//        }
+//
+//        return res;
+//    }
 
     @Override
     public FaqDto.DetailResDto detail(Long id) {
-        Faq faq = faqRepository.findById(id).orElseThrow(() -> new RuntimeException(""));
-        return entityToDto(faq);
+//        Faq faq = faqRepository.findById(id).orElseThrow(() -> new RuntimeException(""));
+//        return entityToDto(faq);
+        return faqMapper.detail(id);
     }
 
 

@@ -31,7 +31,7 @@ FAQ list
       type: "GET",
       contentType : 'application/json; charset=utf-8',
       data: {
-        title : ""
+        title : $("#search_faq_title").val()
       },
       cache: false,
       success: (obj_data, status, xhr)=>{

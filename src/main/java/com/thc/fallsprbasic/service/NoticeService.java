@@ -14,6 +14,6 @@ public interface NoticeService {
 
     void updateNotice(NoticeDto.UpdateReqDto params);
     Map<String, Object> deleteNotice(Long id);
-    List<NoticeDto.DetailResDto> list();
+    List<NoticeDto.DetailResDto> list(NoticeDto.ListReqDto param);
     NoticeDto.DetailResDto detail(Long id);
 }
