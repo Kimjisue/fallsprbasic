@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Entity
-public class Notice {
+public class Notice  extends AuditingFields{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id Long id;
 

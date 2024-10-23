@@ -19,7 +19,12 @@ list
 
 
 <script>
+  $( document ).ready(function() {
+    console.log( "ready!" );
+    list_notice();
+  })
   function list_notice(){
+    $("#div_list_notice").empty();
     $.ajax({
       url: "/api/notice/list",
       type: "GET",

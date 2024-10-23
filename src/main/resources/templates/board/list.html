@@ -18,7 +18,13 @@ list
 
 
 <script>
+  $( document ).ready(function() {
+    console.log( "ready!" );
+    list_board();
+  })
+
   function list_board(){
+    $("#div_list_board").empty();
     $.ajax({
       url: "/api/board/list",
       type: "GET",
