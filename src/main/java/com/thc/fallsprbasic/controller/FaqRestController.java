@@ -2,6 +2,7 @@ package com.thc.fallsprbasic.controller;
 
 import com.thc.fallsprbasic.domain.Faq;
 import com.thc.fallsprbasic.domain.Notice;
+import com.thc.fallsprbasic.dto.DefaultDto;
 import com.thc.fallsprbasic.dto.FaqDto;
 import com.thc.fallsprbasic.dto.NoticeDto;
 import com.thc.fallsprbasic.service.FaqService;
@@ -27,7 +28,7 @@ public class FaqRestController {
 //    }
 
     @PostMapping("")
-    public ResponseEntity<FaqDto.CreateResDto> create(@RequestBody FaqDto.CreateReqDto param){
+    public ResponseEntity<DefaultDto.CreateResDto> create(@RequestBody FaqDto.CreateReqDto param){
         return ResponseEntity.ok(faqService.create(param));
     }
 

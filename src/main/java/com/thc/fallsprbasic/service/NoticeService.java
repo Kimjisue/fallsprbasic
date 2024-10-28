@@ -13,13 +13,6 @@ public interface NoticeService {
     DefaultDto.CreateResDto create(NoticeDto.CreateReqDto param);
     void update(NoticeDto.UpdateReqDto param);
     Map<String, Object> delete(Long id);
-
-    NoticeDto.CreateResDto createNotice(NoticeDto.CreateReqDto param);
-
-    void updateNotice(NoticeDto.UpdateReqDto params);
-
-    Map<String, Object> deleteNotice(Long id);
-
     List<NoticeDto.DetailResDto> list(NoticeDto.ListReqDto param);
     NoticeDto.PagedListResDto pagedList(NoticeDto.PagedListReqDto param);
     NoticeDto.DetailResDto detail(Long id);

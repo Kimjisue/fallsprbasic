@@ -61,21 +61,6 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    public NoticeDto.CreateResDto createNotice(NoticeDto.CreateReqDto param) {
-        return null;
-    }
-
-    @Override
-    public void updateNotice(NoticeDto.UpdateReqDto params) {
-
-    }
-
-    @Override
-    public Map<String, Object> deleteNotice(Long id) {
-        return null;
-    }
-
-    @Override
     public List<NoticeDto.DetailResDto> list(NoticeDto.ListReqDto param) {
         List<NoticeDto.DetailResDto> list = noticeMapper.list(param);
         return list;

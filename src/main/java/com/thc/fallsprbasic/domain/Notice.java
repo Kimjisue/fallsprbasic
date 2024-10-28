@@ -1,28 +1,19 @@
 package com.thc.fallsprbasic.domain;
 
-import com.thc.fallsprbasic.dto.NoticeDto;
+import com.thc.fallsprbasic.dto.DefaultDto;
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Entity
-public class Notice  extends AuditingFields{
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id Long id;
-
-    @Setter @Column(nullable = false)
+public class Notice extends AuditingFields{
+    @Setter @Column(nullable=false)
     String title;
-
-    @Setter @Column
+    @Setter
     String content;
 
-    public NoticeDto.CreateResDto toCreateResDto(){
-        NoticeDto.CreateResDto dto = new NoticeDto.CreateResDto();
-        dto.setId(id);
-        return dto;
-
+    public DefaultDto.CreateResDto toCreateResDto() {
+        return DefaultDto.CreateResDto.builder().id(getId()).build();
     }
-
 }

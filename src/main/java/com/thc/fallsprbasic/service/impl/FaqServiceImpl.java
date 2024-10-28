@@ -2,6 +2,7 @@ package com.thc.fallsprbasic.service.impl;
 
 import com.thc.fallsprbasic.domain.Faq;
 import com.thc.fallsprbasic.domain.User;
+import com.thc.fallsprbasic.dto.DefaultDto;
 import com.thc.fallsprbasic.dto.FaqDto;
 import com.thc.fallsprbasic.mapper.FaqMapper;
 import com.thc.fallsprbasic.repository.FaqRepository;
@@ -31,7 +32,7 @@ public class FaqServiceImpl implements FaqService {
     }
 
     @Override
-    public FaqDto.CreateResDto create(FaqDto.CreateReqDto param) {
+    public DefaultDto.CreateResDto create(FaqDto.CreateReqDto param) {
 
         return faqRepository.save(param.toEntity()).toCreateResDto();
     }
@@ -54,41 +55,28 @@ public class FaqServiceImpl implements FaqService {
         faqRepository.delete(faq);
     }
 
-//    public FaqDto.DetailResDto entityToDto(Faq faq){
-//        //돌려줄 디티오에 정보를 담아보겠습니다. (실제로는 Mapper를 사용할 것이라, 이렇게는 잘 안씀)
-//        FaqDto.DetailResDto res = new FaqDto.DetailResDto();
-//        res.setId(faq.getId());
-//        res.setTitle(faq.getTitle());
-//        res.setContent(faq.getContent());
-//        res.setUserId(faq.getUserId());
-//        //사용자 id 값을 가져올 수 있다.
-//        Long userId = faq.getUserId();
-//        try{
-//            User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException(""));
-//            res.setUserUsername((user.getUsername()));
-//        }catch(Exception e){
-//
-//        }
-//
-//        return res;
-//    }
+    public FaqDto.DetailResDto get(Long id){
+        return faqMapper.detail(id);
+    }
+    public List<FaqDto.DetailResDto> detailList(List<FaqDto.DetailResDto> list){
+
+        return faqMapper.detail(id);
+    }
 
     @Override
     public FaqDto.DetailResDto detail(Long id) {
-//        Faq faq = faqRepository.findById(id).orElseThrow(() -> new RuntimeException(""));
-//        return entityToDto(faq);
-        return faqMapper.detail(id);
+        return get(id);
     }
 
 
     @Override
     public List<FaqDto.DetailResDto> list(FaqDto.ListReqDto param) {
-        return faqMapper.list(param);
-//        List<FaqDto.DetailResDto> list = new ArrayList<FaqDto.DetailResDto>();
-//        List<Faq> faqList = faqRepository.findAll();
-//        for(Faq faq : faqList) {
-//            list.add(entityToDto(faq));
-//        }
-//        return list;
+        return detailList(faqMapper.list(param));
+
+    }
+
+    public DefaultDto.PagedListResDto pagedList(FaqDto.ListReqDto param){
+        int countList = faqMapper.pagedListCount(param);
+        return null;
     }
 }
