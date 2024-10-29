@@ -58,9 +58,12 @@ public class FaqServiceImpl implements FaqService {
     public FaqDto.DetailResDto get(Long id){
         return faqMapper.detail(id);
     }
-    public List<FaqDto.DetailResDto> detailList(List<FaqDto.DetailResDto> list){
-
-        return faqMapper.detail(id);
+    public List<FaqDto.DetailResDto> detailList(List<FaqDto.DetailResDto> list) {
+        List<FaqDto.DetailResDto> newList = new ArrayList<>();
+        for(FaqDto.DetailResDto each : list) {
+            newList.add(get(each.getId()));
+        }
+        return newList;
     }
 
     @Override
@@ -75,8 +78,10 @@ public class FaqServiceImpl implements FaqService {
 
     }
 
-    public DefaultDto.PagedListResDto pagedList(FaqDto.ListReqDto param){
+    @Override
+    public DefaultDto.PagedListResDto pagedList(FaqDto.PagedListReqDto param) {
         int countList = faqMapper.pagedListCount(param);
         return null;
     }
+
 }

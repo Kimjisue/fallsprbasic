@@ -16,5 +16,5 @@ public interface FaqService {
     void delete(Long id);
     FaqDto.DetailResDto detail(Long id);
     List<FaqDto.DetailResDto> list(FaqDto.ListReqDto param);
-    DefaultDto.PagedListResDto pagedList(FaqDto.ListReqDto param);
+    DefaultDto.PagedListResDto pagedList(FaqDto.PagedListReqDto param);
     }
