@@ -41,6 +41,10 @@ public class FaqDto {
         private String title;
 
     }
+    @AllArgsConstructor @NoArgsConstructor @SuperBuilder @Setter @Getter
+    public static class ScrollListReqDto extends DefaultDto.ScrollListReqDto{
+        private String title;
+    }
 
 
 }

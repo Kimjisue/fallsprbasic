@@ -55,5 +55,8 @@ public class FaqRestController {
     public ResponseEntity<DefaultDto.PagedListResDto> pList(FaqDto.PagedListReqDto param){
         return ResponseEntity.ok(faqService.pagedList(param));
     }
-
+    @GetMapping("/mlist")
+    public ResponseEntity<List<FaqDto.DetailResDto>> mList(FaqDto.ScrollListReqDto param){
+        return ResponseEntity.ok(faqService.scrollList(param));
+    }
 }
