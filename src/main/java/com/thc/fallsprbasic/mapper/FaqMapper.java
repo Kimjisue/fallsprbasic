@@ -13,3 +13,4 @@ public interface FaqMapper {
     List<FaqDto.DetailResDto> scrollList(FaqDto.ScrollListReqDto param);
     int pagedCount(FaqDto.PagedListReqDto param);
 }
+//xml에서 namespace의 이름과 일치
