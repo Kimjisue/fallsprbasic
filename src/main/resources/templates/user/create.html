@@ -21,36 +21,100 @@ create
 전화번호
 <input type="text" id="create_user_phone" />
 
-<button onclick="create_user()">
-    저장
-</button>
+<button onclick="create_user()">저장</button>
+
+<!-- 파일 업로드 및 다운로드 영역 추가 -->
+<input type="file" id="input_file" onchange="readURLFile(this)"/>
+<button onclick="imgfile_upload()">이미지 파일 업로드</button>
+
+<input type="text" id="input_textfilename"/>
+<button onclick="file_upload()">일반 파일 업로드</button>
+
+<a href="javascript:filedownloadTest()">다운로드 테스트</a>
+
+<img id="img_test" alt="test" src=""/>
 
 <script>
-    function create_user(){
+    let tempFile = null;
+
+    function readURLFile(input) {
+        if (input.files && input.files[0]) {
+            let reader = new FileReader();
+            reader.readAsDataURL(input.files[0]);
+            reader.onload = function(e) {
+                tempFile = input.files[0];
+            }
+        }
+    }
+
+    function imgfile_upload() {
+        let fileData = new FormData();
+        fileData.append("file", tempFile);
+
+        $.ajax({
+            url: "/api/upload",
+            type: "POST",
+            data: fileData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: (data, status, xhr) => {
+                alert(JSON.stringify(data));
+                $("#img_test").attr("src", "/image/" + data);
+            },
+            error: (data) => {
+                alert("error")
+            },
+        });
+    }
+
+    function file_upload() {
+        let fileData = new FormData();
+        fileData.append("file", tempFile);
+
+        $.ajax({
+            url: "/api/upload",
+            type: "POST",
+            data: fileData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: (data, status, xhr) => {
+                alert(JSON.stringify(data));
+                $("#input_textfilename").val(data);
+            },
+            error: (data) => {
+                alert("error")
+            },
+        });
+    }
+
+    function filedownloadTest() {
+        location.href = "/download/" + $("#input_textfilename").val();
+    }
+
+    function create_user() {
         $.ajax({
             url: "/api/user/create",
             type: "POST",
-            contentType : 'application/json; charset=utf-8',
+            contentType: 'application/json; charset=utf-8',
             data: JSON.stringify({
-                username : $("#create_user_username").val()
-                ,password : $("#create_user_password").val()
-                ,name : $("#create_user_name").val()
-                ,phone : $("#create_user_phone").val()
+                username: $("#create_user_username").val(),
+                password: $("#create_user_password").val(),
+                name: $("#create_user_name").val(),
+                phone: $("#create_user_phone").val()
             }),
             cache: false,
-            success: (obj_data, status, xhr)=>{
+            success: (obj_data, status, xhr) => {
                 alert(JSON.stringify(obj_data));
             },
-            error: (obj_data, status, xhr)=>{
+            error: (obj_data, status, xhr) => {
                 alert("error!!");
                 alert(JSON.stringify(obj_data));
             }
         });
     }
-    /*
-    */
 </script>
-
 
 </body>
 </html>

@@ -10,7 +10,7 @@ import lombok.Setter;
 
 @Getter
 @Entity
-public class User {
+public class User extends AuditingFields{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id Long id;
 
