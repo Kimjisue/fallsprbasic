@@ -1,6 +1,6 @@
 package com.thc.fallsprbasic.controller;
 
-import com.thc.fallsprbasic.domain.User;
+import com.thc.fallsprbasic.dto.DefaultDto;
 import com.thc.fallsprbasic.dto.UserDto;
 import com.thc.fallsprbasic.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -13,7 +13,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @RequestMapping("/api/user")
 @RestController
@@ -26,40 +25,43 @@ public class UserRestController {
         this.userService = userService;
     }
 
-    @PostMapping("/create")
-    public UserDto.CreateResDto create(@RequestBody UserDto.CreateReqDto param){
-        return userService.create(param);
+    @PostMapping("/login")
+    public ResponseEntity<DefaultDto.CreateResDto> login(@RequestBody UserDto.LoginReqDto param){
+        return ResponseEntity.ok(userService.login(param));
+    }
+
+    /**/
+    @PostMapping("")
+    public ResponseEntity<DefaultDto.CreateResDto> create(@RequestBody UserDto.CreateReqDto param){
+        return ResponseEntity.ok(userService.create(param));
+    }
+    @PutMapping("")
+    public ResponseEntity<String> update(@RequestBody UserDto.UpdateReqDto param){
+        userService.update(param);
+        return ResponseEntity.ok().build();
+    }
+    @DeleteMapping("")
+    public ResponseEntity<String> delete(@RequestBody UserDto.UpdateReqDto param){
+        userService.delete(param.getId());
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/detail")
+    public ResponseEntity<UserDto.DetailResDto> detail(@RequestParam Long id){
+        return ResponseEntity.ok(userService.detail(id));
     }
     @GetMapping("/list")
-    public List<User> list(){
-        return userService.list();
+    public ResponseEntity<List<UserDto.DetailResDto>> list(UserDto.ListReqDto param){
+        return ResponseEntity.ok(userService.list(param));
     }
-    @GetMapping("/detail") //이 안에 있는 주소값은 꼭 유니크해야함!!
-    public User detail(@RequestParam Long id){
-        return userService.detail(id);
+    @GetMapping("/plist")
+    public ResponseEntity<DefaultDto.PagedListResDto> plist(UserDto.PagedListReqDto param){
+        return ResponseEntity.ok(userService.pagedList(param));
     }
-    @GetMapping("/update")
-    public Map<String, Object> update(@RequestParam Map<String, Object> params){
-        return userService.update(params);
+    @GetMapping("/mlist")
+    public ResponseEntity<List<UserDto.DetailResDto>> mlist(UserDto.ScrollListReqDto param){
+        return ResponseEntity.ok(userService.scrollList(param));
     }
-    @GetMapping("/delete")
-    public Map<String, Object> delete(@RequestParam Map<String, Object> params){
-        return userService.delete(Long.parseLong(params.get("id") + ""));
-    }
-    @PostMapping("/login")
-    public UserDto.LoginResDto login(@RequestBody UserDto.LoginReqDto param){
-        return userService.login(param);
-    }
-
-    @PostMapping("/signup")
-    public UserDto.CreateResDto signup(@RequestBody UserDto.CreateReqDto param){
-        return userService.signup(param);
-    }
-    @GetMapping("/id")
-    public boolean signup(@RequestParam String username){
-        return userService.id(username);
-    }
-
     @PostMapping("/upload")
     public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file) throws IOException {
         String filename = file.getOriginalFilename();

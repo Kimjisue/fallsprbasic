@@ -1,15 +1,18 @@
 package com.thc.fallsprbasic.service.impl;
 
-import com.thc.fallsprbasic.domain.Board;
 import com.thc.fallsprbasic.domain.User;
+import com.thc.fallsprbasic.domain.Notice;
+import com.thc.fallsprbasic.domain.User;
+import com.thc.fallsprbasic.dto.DefaultDto;
 import com.thc.fallsprbasic.dto.UserDto;
-import com.thc.fallsprbasic.repository.BoardRepository;
+import com.thc.fallsprbasic.dto.NoticeDto;
+import com.thc.fallsprbasic.mapper.UserMapper;
 import com.thc.fallsprbasic.repository.UserRepository;
-import com.thc.fallsprbasic.service.BoardService;
+import com.thc.fallsprbasic.repository.UserRepository;
 import com.thc.fallsprbasic.service.UserService;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,131 +20,89 @@ import java.util.Map;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
     public UserServiceImpl(
             UserRepository userRepository
+            , UserMapper userMapper
     ) {
         this.userRepository = userRepository;
+        this.userMapper = userMapper;
     }
 
     @Override
-    public UserDto.CreateResDto create(UserDto.CreateReqDto param) {
+    public DefaultDto.CreateResDto login(UserDto.LoginReqDto param) {
+        System.out.println("login");
+        User user = userRepository.findByUsernameAndPassword(param.getUsername(), param.getPassword());
+        if(user == null){
+            throw new RuntimeException("username or password incorrect");
+        }
+        return DefaultDto.CreateResDto.builder().id(user.getId()).build();
+    }
+
+    /**/
+
+    @Override
+    public DefaultDto.CreateResDto create(UserDto.CreateReqDto param) {
         System.out.println("create");
-        UserDto.CreateResDto result = new UserDto.CreateResDto();
-        Long id = null;
-        String username = param.getUsername();
-        User user = userRepository.findByUsername(username);
-//        if(user == null){
-//            user = new User();
-//            user.setUsername(username);
-//            user.setPassword(param.getPassword());
-//            user.setName(param.getName());
-//            user.setPhone(param.getPhone());
-//            user = userRepository.save(user);
-//
-//            //id = user.getId();
-//            result.setId(user.getId());
-//        } else {
-//            result.setId((long)0);
-//            // 0으로 오면 가입이 안된다고 생각하면 됨
-//
-//        }
-
-        //toEntity 덕분에 아래와 같이 사용 가능
-//        if(user == null){
-//            user = userRepository.save(param.toEntity());
-//            //id = user.getId();
-//            result.setId(user.getId());
-//            return user.toCreateResDto();
-//        } else {
-//            result.setId((long)0);
-//            // 0으로 오면 가입이 안된다고 생각하면 됨
-//            return result;
-//        }
+        User user = userRepository.findByUsername(param.getUsername());
         if(user != null){
-            throw new RuntimeException("id exist");
+            //return DefaultDto.CreateResDto.builder().id((long) -400).build();
+            throw new RuntimeException("already exist");
         }
-        user = userRepository.save(param.toEntity());
-//            //id = user.getId();
-            result.setId(user.getId());
-            return user.toCreateResDto();
+        return userRepository.save(param.toEntity()).toCreateResDto();
     }
     @Override
-    public Map<String, Object> update(Map<String, Object> params) {
+    public void update(UserDto.UpdateReqDto param) {
         System.out.println("update");
-        User user = userRepository.findById(Long.parseLong(params.get("id") + "")).orElseThrow(() -> new RuntimeException(""));
-        if(params.get("username") != null) {
-            user.setUsername((String) params.get("username"));
+        User user = userRepository.findById(param.getId()).orElseThrow(() -> new RuntimeException(""));
+        if(param.getName() != null) {
+            user.setName(param.getName());
         }
-        if(params.get("password") != null) {
-            user.setPassword((String) params.get("password"));
-        }
-        if(params.get("name") != null) {
-            user.setName((String) params.get("name"));
-        }
-        if(params.get("phone") != null) {
-            user.setPhone((String) params.get("phone"));
+        if(param.getPhone() != null) {
+            user.setPhone(param.getPhone());
         }
         userRepository.save(user);
-        return null;
     }
     @Override
-    public List<User> list() {
-        return userRepository.findAll();
-    }
-    @Override
-    public User detail(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new RuntimeException(""));
-    }
-    @Override
-    public Map<String, Object> delete(Long id) {
+    public void delete(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException(""));
         userRepository.delete(user);
-        return null;
+    }
+
+    public UserDto.DetailResDto get(Long id) {
+        return userMapper.detail(id);
+    }
+    public List<UserDto.DetailResDto> detailList(List<UserDto.DetailResDto> list) {
+        List<UserDto.DetailResDto> newList = new ArrayList<>();
+        for(UserDto.DetailResDto each : list) {
+            newList.add(get(each.getId()));
+        }
+        return newList;
+    }
+    @Override
+    public UserDto.DetailResDto detail(Long id) {
+        return get(id);
+    }
+    @Override
+    public List<UserDto.DetailResDto> list(UserDto.ListReqDto param) {
+        return detailList(userMapper.list(param));
     }
 
     @Override
-    public UserDto.LoginResDto login(UserDto.LoginReqDto param) {
-        UserDto.LoginResDto result = new UserDto.LoginResDto();
-
-
-        String username = param.getUsername();//사용자가 프론트에서 던진 아이디
-        String password = param.getPassword();//사용자가 프론트에서 던진 비밀번호
-        User user = userRepository.findByUsernameAndPassword(username,password);
-
-            if(user == null){
-                throw new RuntimeException("wrong");
-            }
-        if(user != null){
-            //로그인 성공 !
-            UserDto.LoginResDto res = new UserDto.LoginResDto();
-            //res.setResult(true);
-            res.setId(user.getId());
-            return res;
-        }
-        return null;
-
+    public DefaultDto.PagedListResDto pagedList(UserDto.PagedListReqDto param){
+        DefaultDto.PagedListResDto retrunVal = DefaultDto.PagedListResDto.init(param, userMapper.pagedListCount(param));
+        retrunVal.setList(detailList(userMapper.pagedList(param)));
+        return retrunVal;
     }
     @Override
-    public UserDto.CreateResDto signup(UserDto.CreateReqDto param) {
-        System.out.println("signup");
-        if(param.getUsername() == null || param.getPassword() == null || param.getName()==null || param.getPhone() == null){
-            throw new RuntimeException("not enough parameters");
+    public List<UserDto.DetailResDto> scrollList(UserDto.ScrollListReqDto param){
+        param.init();
+        Long cursor = param.getCursor();
+        if(cursor != null){
+            User user = userRepository.findById(cursor).orElseThrow(() -> new RuntimeException(""));
+            param.setCreatedAt(user.getCreatedAt() + "");
         }
-        return create(param);
-        //return create(params);
-        //create랑 내용 똑같으니깐 create return 해준거임
+        return detailList(userMapper.scrollList(param));
     }
-
-    @Override
-    public boolean id(String username) {
-        User user = userRepository.findByUsername(username);
-        if(user == null){
-            return true;
-        }
-        return false;
-    }
-
-
-
 
 }
